@@ -15,7 +15,7 @@ export class CreateUserDTO{
     @ApiProperty({
         example: 'Generic',
     })
-    firstName: UserProfile['username']
+    firstName: UserProfile['firstName']
     
     @ApiProperty({
         example: 'Name',
@@ -28,7 +28,7 @@ export class CreateUserDTO{
     birthDate: UserProfile['birthDate']
     
     @ApiProperty({
-        example: '12911113333',
+        example: '"12911113333"',
     })
     phone: UserProfile['phone']
     

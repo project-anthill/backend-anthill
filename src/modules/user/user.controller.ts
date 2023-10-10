@@ -1,30 +1,51 @@
-import { Body, Controller, Get, HttpCode, Param, Post, UsePipes} from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Query, UsePipes} from '@nestjs/common';
 import { CreateUserUseCase } from './useCases/create/createUser.useCase';
-import { ApiTags } from '@nestjs/swagger';
-import { CreateUserRequest, CreateUserResponse } from './useCases/create/createUser.interface';
-import { CreateUserDTO } from './DTOs/createUser.dto';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ICreateUserResponse } from './useCases/create/createUser.interface';
 import { JoiValidationPipe } from 'src/shared/utils/joi/joi-validation-pipe';
 import { CreateUserSchema } from './useCases/create/createUserSchema.validator';
+import { IFindUniqueUserRequest, IFindUniqueUserResponse } from './useCases/findUnique/findUniqueUser.interface';
+import { CreateUserDTO } from './DTOs/createUser.dto';
+import { FindUniqueUserUseCase } from './useCases/findUnique/findUniqueUser.useCase';
+import { FindUniqueUserSchema } from './useCases/findUnique/findUniqueUser.validator';
+import { Gender } from '@prisma/client';
+import { FindManyUserUseCase } from './useCases/findMany/findManyUser.useCase';
+import { IFindManyUserRequest, IFindManyUserResponse } from './useCases/findMany/findManyUser.interface';
 @ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(
-    private createUserUseCase: CreateUserUseCase,
+    private readonly createUserUseCase: CreateUserUseCase,
+    private readonly findUniqueUserUseCase: FindUniqueUserUseCase,
+    private readonly findManyUserUseCase: FindManyUserUseCase,
   ) {}
 
   @HttpCode(201)
   @Post('/')
   @UsePipes(new JoiValidationPipe(CreateUserSchema))
-  async create(@Body() body: CreateUserRequest): Promise<CreateUserResponse> {
-    const { id } = await this.createUserUseCase.handle(body);
-    return { id };
+  async create(@Body() body: CreateUserDTO): Promise<ICreateUserResponse> {
+    return await this.createUserUseCase.handle(body);
   }
 
-  // @HttpCode(200)
-  // @Get('/:id')
-  // async findOne(@Param('id') id: Pick<user, "id">): Promise<FindOneUserResponse>{
-  //   const userFound = await this.
-  // }
+  @HttpCode(200)
+  @Get('/findUnique')
+  @ApiQuery({ name: 'userId', type: String, required: false })
+  @ApiQuery({ name: 'username', type: String, required: false })
+  @ApiQuery({ name: 'email', type: String, required: false })
+  @ApiQuery({ name: 'phone', type: String, required: false })
+  @UsePipes(new JoiValidationPipe(FindUniqueUserSchema))
+  async findUnique(@Query() query: IFindUniqueUserRequest): Promise<IFindUniqueUserResponse>{
+    const userFound = await this.findUniqueUserUseCase.handler(query);
+    return userFound;
+  }
 
-
+  @HttpCode(200)
+  @Get('/findMany')
+  @ApiQuery({ name: 'birthDate', type: String, example: '1990-01-15T12:00:00.000Z',
+    description: 'Change only the date until the "T" (Im having a problem with date format of prisma)', required: false })
+  @ApiQuery({ name: 'gender', enum: Gender, required: false })
+  async findMany(@Query() query: IFindManyUserRequest): Promise<IFindManyUserResponse[]>{
+    const usersFound = await this.findManyUserUseCase.handler(query);
+    return usersFound;
+  }
 }

@@ -12,7 +12,7 @@ export const CreateUserSchema = Joi.object<CreateUserDTO>({
     .valid(Gender.male, Gender.female, Gender.nonBinary,
     Gender.other, Gender.prefererNotToSay)
     .required(),
-  phone: Joi.number().required(),
+  phone: Joi.string().min(10).max(11).required(),
   password: Joi.string().min(8).max(32).regex(/^(?=.*[!@#$%^&*()_+{}\[\]:;<>,?~\\=|\.\-])(?=.*[a-z])(?=.*[A-Z])/)
   .messages({'string.pattern.base': `Password must contain at least one special character, one lowercase letter, and one uppercase letter!`}).required(),
 });

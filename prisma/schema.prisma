@@ -68,7 +68,7 @@ model userProfile {
   firstName String @db.VarChar(60)
   lastName String @db.VarChar(60)
   birthDate DateTime? @db.Date
-  phone BigInt?
+  phone String? @db.VarChar(11)
   gender Gender
   password String @db.VarChar(120)
 }
@@ -78,7 +78,7 @@ model userSocialMedias{
   userId String @unique @db.Uuid 
   userLinkedin String? @db.VarChar(100)
   userGithub String? @db.VarChar(100)
-  idLattes BigInt? 
+  idLattes String? @db.VarChar(20)
 }
 model userLog {
   id String @id @default(uuid()) @db.Uuid 

@@ -1,7 +1,6 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserService } from '../../services/user.service';
-import { CreateUserRequest, CreateUserResponse } from './createUser.interface';
-import { CreateUserDTO } from '../../DTOs/createUser.dto';
+import { ICreateUserRequest, ICreateUserResponse } from './createUser.interface';
 import { UserProfileService } from '../../services/userProfile.service';
 import { Prisma } from '@prisma/client';
 @Injectable()
@@ -10,10 +9,12 @@ export class CreateUserUseCase {
     private userService: UserService,
     private userProfileService: UserProfileService
   ) {}
-  async handle(request: CreateUserRequest): Promise<CreateUserResponse> {
+  async handle(request: ICreateUserRequest): Promise<ICreateUserResponse> {
     try{
       const createdUser = await this.userService.create();
-      const createdUserProfile = await this.userProfileService.create(request, createdUser);
+      await this.userProfileService.create(request, createdUser);
+      if(createdUser.isActive == true)
+        delete createdUser.deactivatedAt && delete createdUser.deactivatedById
       return createdUser;
     } catch (error){
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
