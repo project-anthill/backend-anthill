@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { UserProfile } from "../Models/userProfile.model"
+import { UserProfile } from "../../../shared/models/userProfile.model"
 
 export class CreateUserDTO{
     @ApiProperty({
