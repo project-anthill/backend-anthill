@@ -7,7 +7,7 @@ export class LoginDTO {
   })
   email: UserProfile['email'];
   @ApiProperty({
-    format: 'password',
+    example: '',
     writeOnly: true,
   })
   password: UserProfile['password'];
