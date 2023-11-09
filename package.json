@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "npm i @nestjs/cli && npm i && nest start",
+    "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -26,6 +26,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.0.4",
     "@prisma/client": "^5.2.0",
+    "@nestjs/cli": "^10.0.0",
     "api": "^6.1.1",
     "fs": "^0.0.1-security",
     "joi": "^17.10.2",
