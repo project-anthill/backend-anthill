@@ -6,11 +6,19 @@ import { PrismaService } from 'src/shared/config/prisma.service';
 import { UserProfileService } from './services/userProfile.service';
 import { FindUniqueUserUseCase } from './useCases/findUnique/findUniqueUser.useCase';
 import { FindManyUserUseCase } from './useCases/findMany/findManyUser.useCase';
+import { DeactiveUserUseCase } from './useCases/deactive/deactiveUser.useCase';
 
 @Module({
   imports: [],
   controllers: [UserController],
-  providers: [CreateUserUseCase, UserService, UserProfileService,
-    PrismaService, FindUniqueUserUseCase, FindManyUserUseCase],
+  providers: [
+    CreateUserUseCase,
+    UserService,
+    UserProfileService,
+    PrismaService,
+    FindUniqueUserUseCase,
+    FindManyUserUseCase,
+    DeactiveUserUseCase,
+  ],
 })
 export class UserModule {}
