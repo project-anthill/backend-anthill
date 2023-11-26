@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { user } from '@prisma/client';
 import { PrismaService } from 'src/shared/config/prisma.service';
-import { IFindUniqueUserRequest } from '../useCases/findUnique/findUniqueUser.interface';
-import { IFindManyUserRequest } from '../useCases/findMany/findManyUser.interface';
+import { IFindUniqueUserRequest } from '../useCases/findUniqueUser/findUniqueUser.interface';
+import { IFindManyUserRequest } from '../useCases/findManyUser/findManyUser.interface';
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}

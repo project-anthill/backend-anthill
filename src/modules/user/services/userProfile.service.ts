@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/shared/config/prisma.service';
 import { user, userProfile } from '@prisma/client';
-import { ICreateUserRequest } from '../useCases/create/createUser.interface';
-import { IFindUniqueUserRequest } from '../useCases/findUnique/findUniqueUser.interface';
-import { IFindManyUserRequest } from '../useCases/findMany/findManyUser.interface';
-import { IUpdateUserRequest } from '../useCases/update/updateUser.interface';
+import { ICreateUserRequest } from '../useCases/createUser/createUser.interface';
+import { IFindUniqueUserRequest } from '../useCases/findUniqueUser/findUniqueUser.interface';
+import { IFindManyUserRequest } from '../useCases/findManyUser/findManyUser.interface';
+import { IUpdateUserRequest } from '../useCases/updateUser/updateUser.interface';
 @Injectable()
 export class UserProfileService {
   constructor(private prisma: PrismaService) {}

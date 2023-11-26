@@ -10,7 +10,7 @@ export class FindUniqueUserUseCase {
         private userProfileService: UserProfileService       
     ){}
 
-    async handler(request: IFindUniqueUserRequest): Promise<IFindUniqueUserResponse>{
+    async execute(request: IFindUniqueUserRequest): Promise<IFindUniqueUserResponse>{
         try{
             const userProfile = await this.userProfileService.findOne(request);
             !request.userId ? request.userId = userProfile.userId : "";

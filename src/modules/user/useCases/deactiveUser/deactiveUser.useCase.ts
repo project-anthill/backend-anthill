@@ -9,7 +9,7 @@ export class DeactiveUserUseCase {
     private userService: UserService,
   ) {}
 
-  async handler(userId: string): Promise<any> {
+  async execute(userId: string): Promise<any> {
     try {
       await this.userProfileService.deleteProfile(userId);
       await this.userService.deactive(userId);

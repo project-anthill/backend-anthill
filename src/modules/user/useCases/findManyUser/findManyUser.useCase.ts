@@ -13,7 +13,7 @@ export class FindManyUserUseCase {
     private userProfileService: UserProfileService,
   ) {}
 
-  async handler(
+  async execute(
     request: IFindManyUserRequest,
   ): Promise<IFindManyUserResponse[]> {
     try {

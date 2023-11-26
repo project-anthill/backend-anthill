@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './user.controller';
-import { CreateUserUseCase } from './useCases/create/createUser.useCase';
+import { UserController } from './controllers/user.controller';
+import { CreateUserUseCase } from './useCases/createUser/createUser.useCase';
 import { UserService } from './services/user.service';
 import { PrismaService } from 'src/shared/config/prisma.service';
 import { UserProfileService } from './services/userProfile.service';
-import { FindUniqueUserUseCase } from './useCases/findUnique/findUniqueUser.useCase';
-import { FindManyUserUseCase } from './useCases/findMany/findManyUser.useCase';
-import { DeactiveUserUseCase } from './useCases/deactive/deactiveUser.useCase';
-import { UpdateUserUseCase } from './useCases/update/updateUser.useCase';
+import { FindUniqueUserUseCase } from './useCases/findUniqueUser/findUniqueUser.useCase';
+import { FindManyUserUseCase } from './useCases/findManyUser/findManyUser.useCase';
+import { DeactiveUserUseCase } from './useCases/deactiveUser/deactiveUser.useCase';
+import { UpdateUserUseCase } from './useCases/updateUser/updateUser.useCase';
 
 @Module({
   imports: [],

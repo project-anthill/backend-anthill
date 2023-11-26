@@ -10,28 +10,27 @@ import {
   Query,
   UsePipes,
 } from '@nestjs/common';
-import { CreateUserUseCase } from './useCases/create/createUser.useCase';
+import { CreateUserUseCase } from '../useCases/createUser/createUser.useCase';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
-import { ICreateUserResponse } from './useCases/create/createUser.interface';
+import { ICreateUserResponse } from '../useCases/createUser/createUser.interface';
 import { JoiValidationPipe } from 'src/shared/utils/joi/joi-validation-pipe';
-import { CreateUserSchema } from './useCases/create/createUserSchema.validator';
+import { CreateUserSchema } from '../useCases/createUser/createUserSchema.validator';
 import {
   IFindUniqueUserRequest,
   IFindUniqueUserResponse,
-} from './useCases/findUnique/findUniqueUser.interface';
-import { CreateUserDTO } from './DTOs/createUser.dto';
-import { FindUniqueUserUseCase } from './useCases/findUnique/findUniqueUser.useCase';
-import { FindUniqueUserSchema } from './useCases/findUnique/findUniqueUser.validator';
+} from '../useCases/findUniqueUser/findUniqueUser.interface';
+import { CreateUserDTO } from '../DTOs/createUser.dto';
+import { FindUniqueUserUseCase } from '../useCases/findUniqueUser/findUniqueUser.useCase';
+import { FindUniqueUserSchema } from '../useCases/findUniqueUser/findUniqueUser.validator';
 import { Gender } from '@prisma/client';
-import { FindManyUserUseCase } from './useCases/findMany/findManyUser.useCase';
+import { FindManyUserUseCase } from '../useCases/findManyUser/findManyUser.useCase';
 import {
   IFindManyUserRequest,
   IFindManyUserResponse,
-} from './useCases/findMany/findManyUser.interface';
-import { DeactiveUserUseCase } from './useCases/deactive/deactiveUser.useCase';
-import { string } from 'joi';
-import { UpdateUserDTO } from './DTOs/updateUser.dto';
-import { UpdateUserUseCase } from './useCases/update/updateUser.useCase';
+} from '../useCases/findManyUser/findManyUser.interface';
+import { DeactiveUserUseCase } from '../useCases/deactiveUser/deactiveUser.useCase';
+import { UpdateUserDTO } from '../DTOs/updateUser.dto';
+import { UpdateUserUseCase } from '../useCases/updateUser/updateUser.useCase';
 @ApiTags('user')
 @Controller('user')
 export class UserController {
@@ -47,7 +46,7 @@ export class UserController {
   @Post('/')
   @UsePipes(new JoiValidationPipe(CreateUserSchema))
   async create(@Body() body: CreateUserDTO): Promise<ICreateUserResponse> {
-    return await this.createUserUseCase.handler(body);
+    return await this.createUserUseCase.execute(body);
   }
 
   @HttpCode(200)
@@ -60,7 +59,7 @@ export class UserController {
   async findUnique(
     @Query() query: IFindUniqueUserRequest,
   ): Promise<IFindUniqueUserResponse> {
-    const userFound = await this.findUniqueUserUseCase.handler(query);
+    const userFound = await this.findUniqueUserUseCase.execute(query);
     return userFound;
   }
 
@@ -78,19 +77,19 @@ export class UserController {
   async findMany(
     @Query() query: IFindManyUserRequest,
   ): Promise<IFindManyUserResponse[]> {
-    const usersFound = await this.findManyUserUseCase.handler(query);
+    const usersFound = await this.findManyUserUseCase.execute(query);
     return usersFound;
   }
 
   @HttpCode(201)
   @Delete(':userId')
   async deactive(@Param('userId') userId: string): Promise<any> {
-    await this.deactiveUserUseCase.handler(userId);
+    await this.deactiveUserUseCase.execute(userId);
   }
 
   @HttpCode(204)
   @Put(':userId')
   async update(@Param('userId') userId: string, @Body() request: UpdateUserDTO): Promise<any>{
-    await this.updateUserUseCase.handler(userId, request)
+    await this.updateUserUseCase.execute(userId, request)
   }
 }
