@@ -7,6 +7,7 @@ import { UserProfileService } from './services/userProfile.service';
 import { FindUniqueUserUseCase } from './useCases/findUnique/findUniqueUser.useCase';
 import { FindManyUserUseCase } from './useCases/findMany/findManyUser.useCase';
 import { DeactiveUserUseCase } from './useCases/deactive/deactiveUser.useCase';
+import { UpdateUserUseCase } from './useCases/update/updateUser.useCase';
 
 @Module({
   imports: [],
@@ -19,6 +20,7 @@ import { DeactiveUserUseCase } from './useCases/deactive/deactiveUser.useCase';
     FindUniqueUserUseCase,
     FindManyUserUseCase,
     DeactiveUserUseCase,
+    UpdateUserUseCase,
   ],
 })
 export class UserModule {}

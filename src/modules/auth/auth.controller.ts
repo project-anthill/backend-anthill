@@ -13,12 +13,6 @@ export class AuthController {
     return await this.loginUseCase.handle();
   }
 
-  @HttpCode(201)
-  @Post('/logout')
-  async logout() {
-    return;
-  }
-
   @HttpCode(200)
   @Post('/refresh-token')
   async refreshToken() {

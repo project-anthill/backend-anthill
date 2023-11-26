@@ -4,6 +4,7 @@ import { user, userProfile } from '@prisma/client';
 import { ICreateUserRequest } from '../useCases/create/createUser.interface';
 import { IFindUniqueUserRequest } from '../useCases/findUnique/findUniqueUser.interface';
 import { IFindManyUserRequest } from '../useCases/findMany/findManyUser.interface';
+import { IUpdateUserRequest } from '../useCases/update/updateUser.interface';
 @Injectable()
 export class UserProfileService {
   constructor(private prisma: PrismaService) {}
@@ -12,6 +13,21 @@ export class UserProfileService {
       data: {
         ...request,
         user: { connect: { id: userCreated.id } },
+      },
+    });
+  }
+
+  async update(userId: string, request: IUpdateUserRequest, oldInfos: IUpdateUserRequest) {
+    await this.prisma.userProfile.update({
+      where: {
+        userId: userId,
+      },
+      data: {
+        firstName: request.firstName ? request.firstName : oldInfos.firstName,
+        lastName: request.lastName ? request.lastName : oldInfos.lastName,
+        email: request.email ? request.email : oldInfos.email,
+        username: request.username ? request.username : oldInfos.username,
+        phone: request.phone ? request.phone : oldInfos.phone,
       },
     });
   }

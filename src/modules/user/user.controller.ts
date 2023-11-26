@@ -6,6 +6,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
   Query,
   UsePipes,
 } from '@nestjs/common';
@@ -29,6 +30,8 @@ import {
 } from './useCases/findMany/findManyUser.interface';
 import { DeactiveUserUseCase } from './useCases/deactive/deactiveUser.useCase';
 import { string } from 'joi';
+import { UpdateUserDTO } from './DTOs/updateUser.dto';
+import { UpdateUserUseCase } from './useCases/update/updateUser.useCase';
 @ApiTags('user')
 @Controller('user')
 export class UserController {
@@ -37,6 +40,7 @@ export class UserController {
     private readonly findUniqueUserUseCase: FindUniqueUserUseCase,
     private readonly findManyUserUseCase: FindManyUserUseCase,
     private readonly deactiveUserUseCase: DeactiveUserUseCase,
+    private readonly updateUserUseCase: UpdateUserUseCase,
   ) {}
 
   @HttpCode(201)
@@ -82,5 +86,11 @@ export class UserController {
   @Delete(':userId')
   async deactive(@Param('userId') userId: string): Promise<any> {
     await this.deactiveUserUseCase.handler(userId);
+  }
+
+  @HttpCode(204)
+  @Put(':userId')
+  async update(@Param('userId') userId: string, @Body() request: UpdateUserDTO): Promise<any>{
+    await this.updateUserUseCase.handler(userId, request)
   }
 }
