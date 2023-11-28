@@ -7,18 +7,18 @@ export class JWTService {
   constructor() {}
 
   generateAccessToken(payload: { userId; email }, expiresIn: string) {
-    return jwt.sign(payload, `${process.env.DB_CONN_STRING}`, {
+    return jwt.sign(payload, `${process.env.AUTH_KEY}`, {
       expiresIn: expiresIn,
     });
   }
 
   generateRefreshToken(payload: { userId }, expiresIn: string) {
-    return jwt.sign(payload, `${process.env.DB_CONN_STRING}`, {
+    return jwt.sign(payload, `${process.env.AUTH_KEY}`, {
       expiresIn: expiresIn,
     });
   }
 
   verifyToken(refreshToken: string) {
-    return jwt.verify(refreshToken, `${process.env.DB_CONN_STRING}`);
+    return jwt.verify(refreshToken, `${process.env.AUTH_KEY}`);
   }
 }
