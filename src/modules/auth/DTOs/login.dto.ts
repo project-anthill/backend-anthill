@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { UserProfile } from '../../../shared/models/userProfile.model';
 
-export class LoginDTO {
+export class LoginInputDTO {
   @ApiProperty({
     example: 'yourUsername',
   })
@@ -11,4 +11,10 @@ export class LoginDTO {
     writeOnly: true,
   })
   password: UserProfile['password'];
+}
+
+export class LoginOutputDTO {
+  access_token: string;
+  expires_in: number;
+  refresh_token: string;
 }

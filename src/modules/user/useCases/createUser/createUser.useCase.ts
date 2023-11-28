@@ -6,6 +6,7 @@ import {
 } from './createUser.interface';
 import { UserProfileService } from '../../services/userProfile.service';
 import { Prisma } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class CreateUserUseCase {
   constructor(
@@ -14,7 +15,9 @@ export class CreateUserUseCase {
   ) {}
   async execute(request: ICreateUserRequest): Promise<ICreateUserResponse> {
     try {
+      const hashedPass = bcrypt.hashSync(request.password, 10);
       const createdUser = await this.userService.create();
+      request.password = hashedPass;
       await this.userProfileService.create(request, createdUser);
       if (createdUser.isActive == true)
         delete createdUser.deactivatedAt && delete createdUser.deactivatedById;
