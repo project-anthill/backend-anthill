@@ -17,7 +17,7 @@ export class UpdateUserUseCase {
       return await this.userProfileService.update(userId, request,{
         firstName:userProfile.firstName,
         lastName: userProfile.lastName,
-        email: userProfile.username,
+        email: userProfile.email,
         username: userProfile.username,
         phone: userProfile.phone,
       })
