@@ -1,7 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PlanService } from '../../services/plan.service';
-import { CreatePlanDTO } from '../../DTOs/plan.dto';
-import { Plan } from 'src/shared/models/plan.model';
+import { CreatePlanDTO } from '../../DTOs/createPlan.dto';
 import { PrismaErrorHandler } from 'src/shared/utils/prisma-error-handler';
 
 @Injectable()
