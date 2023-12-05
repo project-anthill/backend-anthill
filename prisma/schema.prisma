@@ -142,7 +142,7 @@ model planCategory{
   createdAt DateTime
   updatedAt DateTime
   updatedBy String @db.Uuid
-  usersWithCategory planHasCategories[]
+  plansWithCategory planHasCategories[]
 }
 model plan{
   id String @id @default(uuid()) @db.Uuid 
