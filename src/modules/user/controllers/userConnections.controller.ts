@@ -2,9 +2,9 @@ import { Controller, HttpCode, Post, Query, Req } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { RequestConnectionUseCase } from "../useCases/requestConnection/requestConnection.useCase";
 
-@ApiTags('UserConnections')
+@ApiTags('User connections')
 @Controller('user-connections')
-export class UserController {
+export class UserConnectionsController {
   constructor(private readonly requestConnectionUseCase: RequestConnectionUseCase){}
 
   @HttpCode(201)

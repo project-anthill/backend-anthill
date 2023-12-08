@@ -4,6 +4,7 @@ import { IPlanService } from './interfaces/plan.interface';
 import { CreatePlanDTO } from '../DTOs/createPlan.dto';
 import { GetPlanDTO } from '../DTOs/getPlan.dto';
 import { Plan } from 'src/shared/models/plan.model';
+import { planHasCategories as PlanHasCategories } from '@prisma/client';
 @Injectable()
 export class PlanService implements IPlanService{
   constructor(private prisma: PrismaService) {}
@@ -24,9 +25,16 @@ export class PlanService implements IPlanService{
     } });
   }
 
-  async getPlan(request: Pick<GetPlanDTO, 'planId'>): Promise<Plan>{
+  async getPlan(request: Pick<GetPlanDTO, 'planId'>): Promise<any>{
     return this.prisma.plan.findUnique({
       where: { id: request.planId },
+      include: {
+        planCategories: {
+          include: {
+            category: true,
+          }
+        }
+      },
     });
   }
   
@@ -34,5 +42,14 @@ export class PlanService implements IPlanService{
     return this.prisma.plan.findMany({
       where: { userId: request.userId },
     });
+  }
+
+  async addCategoriesToPlan(planId: string, categoryId: string): Promise<PlanHasCategories>{
+    return this.prisma.planHasCategories.create({
+      data:{
+        plan: { connect: { id: planId } },
+        category: { connect: { id: categoryId } },
+      }
+    })
   }
 }

@@ -31,7 +31,7 @@ import {
 import { DeactiveUserUseCase } from '../useCases/deactiveUser/deactiveUser.useCase';
 import { UpdateUserDTO } from '../DTOs/updateUser.dto';
 import { UpdateUserUseCase } from '../useCases/updateUser/updateUser.useCase';
-@ApiTags('user')
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(

@@ -3,7 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { LoginUseCase } from './useCases/login/login.useCase';
 import { LoginInputDTO, LoginOutputDTO } from './DTOs/login.dto';
 import { LoginFakeUseCase } from './useCases/loginFake/loginFake.useCase';
-@ApiTags('auth')
+@ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
   constructor(

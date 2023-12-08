@@ -9,7 +9,7 @@ export class GetPlanUseCase {
   constructor(
     private planService: PlanService,
   ) {}
-  async execute(request: Pick<GetPlanDTO,'planId'>): Promise<Plan> {
+  async execute(request: Pick<GetPlanDTO,'planId'>): Promise<any> {
     try {
       const plan = await this.planService.getPlan(request);
       if(!plan) throw new BadRequestException("Não foi possível encontrar o plano!");

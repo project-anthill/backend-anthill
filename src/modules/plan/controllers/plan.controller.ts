@@ -1,18 +1,23 @@
-import { Body, Controller, Get, HttpCode, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Post, Query, UsePipes } from "@nestjs/common";
 import { ApiQuery, ApiTags } from "@nestjs/swagger";
 import { CreatePlanDTO } from "../DTOs/createPlan.dto";
 import { CreatePlanUseCase } from "../useCases/createPlan/createPlan.useCase";
 import { GetPlanDTO } from "../DTOs/getPlan.dto";
 import { GetPlanUseCase } from "../useCases/getPlan/getPlan.useCase";
 import { GetUserPlansUseCase } from "../useCases/getUserPlans/getUserPlans.useCase";
+import { AddCategoriesToPlanUseCase } from "../useCases/addCategoriesToPlan/addCategoriesToPlan.useCase";
+import { AddCategoriesToPlanDTO } from "../DTOs/addCategoriesToPlan.dto";
+import { JoiValidationPipe } from "src/shared/utils/joi/joi-validation-pipe";
+import { AddCategoriesToPlanSchema } from "../useCases/addCategoriesToPlan/addCategoriesToPlanSchema.validator";
 
-@ApiTags('plan')
+@ApiTags('Plan')
 @Controller('plan')
 export class PlanController {
   constructor(
     private readonly createPlanUseCase: CreatePlanUseCase,
     private readonly getPlanUseCase: GetPlanUseCase,
     private readonly getUserPlansUseCase: GetUserPlansUseCase,
+    private readonly addCategoriesToPlanUseCase: AddCategoriesToPlanUseCase,
   ) {}
 
   @HttpCode(204)
@@ -34,4 +39,13 @@ export class PlanController {
   async getPlan(@Query() query: Pick<GetPlanDTO, 'planId'>): Promise<any> {
     return await this.getPlanUseCase.execute(query);
   }
+
+  @HttpCode(204)
+  @Post('/add-categories-to-plan')
+  @UsePipes(new JoiValidationPipe(AddCategoriesToPlanSchema))
+  async addCategoriesToPlan(@Body() body: AddCategoriesToPlanDTO): Promise<{message:string}> {
+    return await this.addCategoriesToPlanUseCase.execute(body);
+  }
+
+  
 }

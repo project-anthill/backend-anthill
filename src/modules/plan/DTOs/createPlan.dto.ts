@@ -30,10 +30,10 @@ export class CreatePlanDTO {
   @ApiProperty({
     example: 'bannerImageUrl',
   })
-  bannerImageUrl: Plan['bannerImageUrl'];
+  bannerImageUrl?: Plan['bannerImageUrl'];
 
   @ApiProperty({
     example: 'iconImageUrl',
   })
-  iconImageUrl: Plan['iconImageUrl'];
+  iconImageUrl?: Plan['iconImageUrl'];
 }
