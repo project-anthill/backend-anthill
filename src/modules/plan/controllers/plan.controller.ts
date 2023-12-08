@@ -1,5 +1,5 @@
 import { Body, Controller, Get, HttpCode, Post, Query, UsePipes } from "@nestjs/common";
-import { ApiQuery, ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { CreatePlanDTO } from "../DTOs/createPlan.dto";
 import { CreatePlanUseCase } from "../useCases/createPlan/createPlan.useCase";
 import { GetPlanDTO } from "../DTOs/getPlan.dto";
@@ -22,6 +22,10 @@ export class PlanController {
 
   @HttpCode(204)
   @Post('/')
+  @ApiOperation({
+    summary: 'Create a new plan',
+    description: 'Endpoint to create a new plan with the provided data.',
+  })
   async create(@Body() body: CreatePlanDTO): Promise<{message:string}> {
     return await this.createPlanUseCase.execute(body);
   }
@@ -29,6 +33,10 @@ export class PlanController {
   @HttpCode(201)
   @Get('/user-plans')
   @ApiQuery({ name: 'userId', type: String, required: true })
+  @ApiOperation({
+    summary: 'Get only plans created by a user',
+    description: 'Endpoint to request plans created by the USER ID',
+  })
   async getUserPlans(@Query() query: Pick<GetPlanDTO, 'userId'>): Promise<any> {
     return await this.getUserPlansUseCase.execute(query);
   }
@@ -36,6 +44,10 @@ export class PlanController {
   @HttpCode(201)
   @Get('/get-plan')
   @ApiQuery({ name: 'planId', type: String, required: true })
+  @ApiOperation({
+    summary: 'Get plan',
+    description: 'Endpoint to request a especific plan by PLAN ID',
+  })
   async getPlan(@Query() query: Pick<GetPlanDTO, 'planId'>): Promise<any> {
     return await this.getPlanUseCase.execute(query);
   }
@@ -43,9 +55,13 @@ export class PlanController {
   @HttpCode(204)
   @Post('/add-categories-to-plan')
   @UsePipes(new JoiValidationPipe(AddCategoriesToPlanSchema))
+  @ApiOperation({
+    summary: 'Add categories to a plan',
+    description: 'Endpoint to add categories to a plan, limited to 5 categories. <br/> Send categoriesList like this <b> "categoriesList": ["idCategory1","idCategory2","idCategory3","idCategory4","idCategory5"] </b>',
+  })
   async addCategoriesToPlan(@Body() body: AddCategoriesToPlanDTO): Promise<{message:string}> {
     return await this.addCategoriesToPlanUseCase.execute(body);
   }
 
-  
+
 }

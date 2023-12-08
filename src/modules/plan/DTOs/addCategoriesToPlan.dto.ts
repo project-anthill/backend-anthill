@@ -9,7 +9,7 @@ export class AddCategoriesToPlanDTO {
   planId: Plan['id'];
 
   @ApiProperty({
-    example: 'category-id',
+    example: '["categoryId"]',
     type: [String],
     isArray: true,
     maxLength: 5,

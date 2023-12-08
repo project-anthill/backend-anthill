@@ -10,6 +10,8 @@ export class CreatePlanUseCase {
   ) {}
   async execute(request: CreatePlanDTO): Promise<any> {
     try {
+      const encoded = btoa(JSON.stringify(request.description))
+      request.description = encoded;
       const createdUser = await this.planService.create(request);
       if(!createdUser) throw new BadRequestException("Não foi possível criar plano!");
       return { message: 'success'};

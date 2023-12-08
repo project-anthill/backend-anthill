@@ -20,7 +20,7 @@ export class CreatePlanDTO {
   @ApiProperty({
     example: 'description',
   })
-  description: Plan['description'];
+  description: any;
 
   @ApiProperty({
     enum: ['concept', 'prototype', 'tutorial'],
