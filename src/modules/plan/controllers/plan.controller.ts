@@ -21,7 +21,7 @@ export class PlanController {
     private readonly addCategoriesToPlanUseCase: AddCategoriesToPlanUseCase,
   ) {}
 
-  @HttpCode(204)
+  @HttpCode(201)
   @Post('/')
   @ApiOperation({
     summary: 'Create a new plan',
