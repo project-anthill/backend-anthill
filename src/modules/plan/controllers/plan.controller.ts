@@ -9,6 +9,7 @@ import { AddCategoriesToPlanUseCase } from "../useCases/addCategoriesToPlan/addC
 import { AddCategoriesToPlanDTO } from "../DTOs/addCategoriesToPlan.dto";
 import { JoiValidationPipe } from "src/shared/utils/joi/joi-validation-pipe";
 import { AddCategoriesToPlanSchema } from "../useCases/addCategoriesToPlan/addCategoriesToPlanSchema.validator";
+import { Plan } from "src/shared/models/plan.model";
 
 @ApiTags('Plan')
 @Controller('plan')
@@ -26,7 +27,7 @@ export class PlanController {
     summary: 'Create a new plan',
     description: 'Endpoint to create a new plan with the provided data.',
   })
-  async create(@Body() body: CreatePlanDTO): Promise<{message:string}> {
+  async create(@Body() body: CreatePlanDTO): Promise<Plan> {
     return await this.createPlanUseCase.execute(body);
   }
 
