@@ -3,7 +3,7 @@ import { UserService } from '../../services/user.service';
 import { PrismaErrorHandler } from 'src/shared/utils/prisma-error.handler';
 import { ResponseHandler } from 'src/shared/utils/response.handler';
 import { UserConnections } from 'src/shared/models/userConnections.model';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, userConnections } from '@prisma/client';
 
 @Injectable()
 export class FindUserSentRequestsUseCase {
@@ -11,7 +11,7 @@ export class FindUserSentRequestsUseCase {
     private userService: UserService,
   ) {}
 
-  async execute(userId: string): Promise<ResponseHandler & {connections: UserConnections[]}> {
+  async execute(userId: userConnections['userId']): Promise<ResponseHandler & {connections: UserConnections[]}> {
     try {
       const response = await this.userService.findUserSentRequests(userId);
 

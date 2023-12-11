@@ -6,6 +6,7 @@ import { FindUserSentRequestsUseCase } from "../useCases/findUserSentRequests/fi
 import { FindUserReceivedRequestsUseCase } from "../useCases/findUserReceivedRequests/findeUserReceivedRequests.useCase";
 import { ResponseHandler } from "src/shared/utils/response.handler";
 import { UserConnections } from "src/shared/models/userConnections.model";
+import { userConnections } from "@prisma/client";
 
 @ApiTags('User connections')
 @Controller('user-connections')
@@ -25,14 +26,14 @@ export class UserConnectionsController {
   @HttpCode(200)
   @Get('req-sent')
   @ApiQuery({ name: 'userId', type: String, required: true })
-  async findUserSentRequests(@Query('userId') userId: string): Promise<ResponseHandler & {connections: UserConnections[]}>{
+  async findUserSentRequests(@Query('userId') userId: userConnections['userId']): Promise<ResponseHandler & {connections: UserConnections[]}>{
     return this.findUserSentRequestsUseCase.execute(userId);
   }
 
   @HttpCode(200)
   @Get('req-received')
   @ApiQuery({ name: 'userId', type: String, required: true })
-  async findUserReceivedRequests(@Query('userId') userId: string): Promise<ResponseHandler & {connections: UserConnections[]}>{
+  async findUserReceivedRequests(@Query('userId') userId: userConnections['userConnectedId']): Promise<ResponseHandler & {connections: UserConnections[]}>{
     return this.findUserReceivedRequestsUseCase.execute(userId);
   }
 

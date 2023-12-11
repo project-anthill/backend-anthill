@@ -3,7 +3,7 @@ import { UserService } from '../../services/user.service';
 import { PrismaErrorHandler } from 'src/shared/utils/prisma-error.handler';
 import { ResponseHandler } from 'src/shared/utils/response.handler';
 import { UserConnections } from 'src/shared/models/userConnections.model';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, userConnections } from '@prisma/client';
 import { isEmpty } from 'rxjs';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class FindUserReceivedRequestsUseCase {
     private userService: UserService,
   ) {}
 
-  async execute(userId: string): Promise<ResponseHandler & {connections: UserConnections[]}> {
+  async execute(userId: userConnections['userConnectedId']): Promise<ResponseHandler & {connections: UserConnections[]}> {
     try {
       const response = await this.userService.findUserReceivedRequests(userId);
       console.log(response)
