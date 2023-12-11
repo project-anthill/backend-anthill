@@ -24,13 +24,15 @@ export class UserConnectionsController {
 
   @HttpCode(200)
   @Get('req-sent')
-  async findUserSentRequests(@Query('userid') userId: string): Promise<ResponseHandler & {connections: UserConnections[]}>{
+  @ApiQuery({ name: 'userId', type: String, required: true })
+  async findUserSentRequests(@Query('userId') userId: string): Promise<ResponseHandler & {connections: UserConnections[]}>{
     return this.findUserSentRequestsUseCase.execute(userId);
   }
 
   @HttpCode(200)
   @Get('req-received')
-  async findUserReceivedRequests(@Query('userid') userId: string): Promise<ResponseHandler & {connections: UserConnections[]}>{
+  @ApiQuery({ name: 'userId', type: String, required: true })
+  async findUserReceivedRequests(@Query('userId') userId: string): Promise<ResponseHandler & {connections: UserConnections[]}>{
     return this.findUserReceivedRequestsUseCase.execute(userId);
   }
 
