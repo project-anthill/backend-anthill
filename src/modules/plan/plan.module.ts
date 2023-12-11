@@ -12,6 +12,7 @@ import { PlanCategoryService } from './services/planCategory.service';
 import { PlanCategoryController } from './controllers/planCategory.controller';
 import { CreatePlanCategoryUseCase } from './useCases/createPlanCategory/createPlanCategory.useCase';
 import { AddCategoriesToPlanUseCase } from './useCases/addCategoriesToPlan/addCategoriesToPlan.useCase';
+import { GetAllPlansUseCase } from './useCases/getAllPlans/getAllPlans.useCase';
 
 @Module({
   imports: [],
@@ -22,6 +23,7 @@ import { AddCategoriesToPlanUseCase } from './useCases/addCategoriesToPlan/addCa
     GetUserPlansUseCase,
     GetPlanCategoriesUseCase,
     GetPlanCategoryUseCase,
+    GetAllPlansUseCase,
     CreatePlanCategoryUseCase,
     AddCategoriesToPlanUseCase,
     PlanCategoryService,

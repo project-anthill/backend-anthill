@@ -10,6 +10,8 @@ import { AddCategoriesToPlanDTO } from "../DTOs/addCategoriesToPlan.dto";
 import { JoiValidationPipe } from "src/shared/utils/joi/joi-validation-pipe";
 import { AddCategoriesToPlanSchema } from "../useCases/addCategoriesToPlan/addCategoriesToPlanSchema.validator";
 import { Plan } from "src/shared/models/plan.model";
+import { GetPlanResponse } from "../DTOs/getPlanResponse";
+import { GetAllPlansUseCase } from "../useCases/getAllPlans/getAllPlans.useCase";
 
 @ApiTags('Plan')
 @Controller('plan')
@@ -17,6 +19,7 @@ export class PlanController {
   constructor(
     private readonly createPlanUseCase: CreatePlanUseCase,
     private readonly getPlanUseCase: GetPlanUseCase,
+    private readonly getAllPlansUseCase: GetAllPlansUseCase,
     private readonly getUserPlansUseCase: GetUserPlansUseCase,
     private readonly addCategoriesToPlanUseCase: AddCategoriesToPlanUseCase,
   ) {}
@@ -51,6 +54,16 @@ export class PlanController {
   })
   async getPlan(@Query() query: Pick<GetPlanDTO, 'planId'>): Promise<any> {
     return await this.getPlanUseCase.execute(query);
+  }
+
+  @HttpCode(201)
+  @Get('/')
+  @ApiOperation({
+    summary: 'Get all plans',
+    description: 'Endpoint to request a list of every plan on base',
+  })
+  async getAllPlans(): Promise<GetPlanResponse[]> {
+    return await this.getAllPlansUseCase.execute();
   }
 
   @HttpCode(204)

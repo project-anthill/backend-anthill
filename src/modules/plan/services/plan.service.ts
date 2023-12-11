@@ -37,6 +37,21 @@ export class PlanService implements IPlanService{
       },
     });
   }
+
+  async getAllPlans(): Promise<any[]>{
+    return this.prisma.plan.findMany({
+      include: {
+        planCategories: {
+          include: {
+            category: true,
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc',
+      }
+    });
+  }
   
   async getUserPlans(request: Pick<GetPlanDTO, 'userId'>): Promise<any[]>{
     return this.prisma.plan.findMany({
