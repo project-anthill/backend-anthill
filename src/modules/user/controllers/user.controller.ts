@@ -31,6 +31,7 @@ import {
 import { DeactiveUserUseCase } from '../useCases/deactiveUser/deactiveUser.useCase';
 import { UpdateUserDTO } from '../DTOs/updateUser.dto';
 import { UpdateUserUseCase } from '../useCases/updateUser/updateUser.useCase';
+import { ResponseHandler } from 'src/shared/utils/response.handler';
 @ApiTags('User')
 @Controller('user')
 export class UserController {
@@ -83,8 +84,8 @@ export class UserController {
 
   @HttpCode(201)
   @Delete(':userId')
-  async deactive(@Param('userId') userId: string): Promise<any> {
-    await this.deactiveUserUseCase.execute(userId);
+  async deactive(@Param('userId') userId: string): Promise<ResponseHandler> {
+    return await this.deactiveUserUseCase.execute(userId);
   }
 
   @HttpCode(204)

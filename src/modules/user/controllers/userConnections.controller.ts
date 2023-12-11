@@ -1,28 +1,56 @@
-import { Controller, HttpCode, Post, Query, Req } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Get, HttpCode, Post, Query, Req } from "@nestjs/common";
+import { ApiQuery, ApiTags } from "@nestjs/swagger";
 import { RequestConnectionUseCase } from "../useCases/requestConnection/requestConnection.useCase";
+import { RequestConnectionUserDTO } from "../DTOs/requestConnectionUser.dto";
+import { FindUserSentRequestsUseCase } from "../useCases/findUserSentRequests/findUserSentRequests.useCase";
+import { FindUserReceivedRequestsUseCase } from "../useCases/findUserReceivedRequests/findeUserReceivedRequests.useCase";
+import { ResponseHandler } from "src/shared/utils/response.handler";
+import { UserConnections } from "src/shared/models/userConnections.model";
 
 @ApiTags('User connections')
 @Controller('user-connections')
 export class UserConnectionsController {
-  constructor(private readonly requestConnectionUseCase: RequestConnectionUseCase){}
+  constructor(
+    private readonly requestConnectionUseCase: RequestConnectionUseCase,
+    private readonly findUserSentRequestsUseCase: FindUserSentRequestsUseCase,
+    private readonly findUserReceivedRequestsUseCase: FindUserReceivedRequestsUseCase,
+  ){}
 
   @HttpCode(201)
   @Post('request-connection')
-  async requestConnection(@Query('userId') userId: string, @Req() req): Promise<any>{
-    const token = req.token;
-    return this.requestConnectionUseCase.execute(req.token, userId);
+  async requestConnection(@Body() request: RequestConnectionUserDTO): Promise<{message:String, status:String}>{
+    return this.requestConnectionUseCase.execute(request);
+  }
+
+  @HttpCode(200)
+  @Get('req-sent')
+  @ApiQuery({ name: 'userId', type: String, required: true })
+  async findUserSentRequests(@Query('userid') userId: string): Promise<ResponseHandler & {connections: UserConnections[]}>{
+    return this.findUserSentRequestsUseCase.execute(userId);
+  }
+
+  @HttpCode(200)
+  @Get('req-received')
+  @ApiQuery({ name: 'userId', type: String, required: true })
+  async findUserReceivedRequests(@Query('userid') userId: string): Promise<ResponseHandler & {connections: UserConnections[]}>{
+    return this.findUserReceivedRequestsUseCase.execute(userId);
   }
 
   @HttpCode(201)
-  @Post('deny-connection')
-  async denyConnection(){
+  @Post('deny-requisition')
+  async denyRequisition(){
 
   }
 
   @HttpCode(201)
-  @Post('accept-connection')
-  async acceptConnection(){
+  @Post('accept-requisition')
+  async acceptRequisition(){
+
+  }
+
+  @HttpCode(201)
+  @Post('cancel-connection')
+  async cancelConnection(){
 
   }
 }
